@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Rifa Online</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-storage-compat.js"></script>
+</head>
+<body>
+
+  <h2>Rifa Online (R$10)</h2>
+
+  <label>Seu nome:</label>
+  <input type="text" id="nome" required>
+
+  <label>Número desejado:</label>
+  <select id="numero"></select>
+
+  <label>Comprovante PIX:</label>
+  <input type="file" id="comprovante" accept="image/*" required>
+  <img id="preview" style="max-width: 100%; display: none;">
+
+  <button onclick="enviar()">Enviar</button>
+
+  <p id="status"></p>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDS8PvI9sIP6wLTHz85C13gRiilyNZD96Q",
+      authDomain: "rifadaesperancaonline.firebaseapp.com",
+      projectId: "rifadaesperancaonline",
+      storageBucket: "rifadaesperancaonline.firebasestorage.app",
+      messagingSenderId: "197315129113",
+      appId: "1:197315129113:web:a5b75aa889573d2858df88"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const storage = firebase.storage();
+
+    const numeroSelect = document.getElementById("numero");
+    async function carregarNumeros() {
+      const snapshot = await db.collection("rifa").get();
+      const ocupados = snapshot.docs.map(doc => doc.data().numero);
+      for (let i = 1; i <= 150; i++) {
+        const opt = document.createElement("option");
+        opt.value = i;
+        opt.textContent = i;
+        if (ocupados.includes(i)) {
+          opt.disabled = true;
+          opt.textContent += " (ocupado)";
+        }
+        numeroSelect.appendChild(opt);
+      }
+    }
+    carregarNumeros();
+
+    document.getElementById("comprovante").onchange = (e) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const img = document.getElementById("preview");
+        img.src = reader.result;
+        img.style.display = "block";
+      };
+      reader.readAsDataURL(e.target.files[0]);
+    };
+
+    async function enviar() {
+      const nome = document.getElementById("nome").value.trim();
+      const numero = parseInt(document.getElementById("numero").value);
+      const arquivo = document.getElementById("comprovante").files[0];
+      const status = document.getElementById("status");
+
+      if (!nome || !arquivo) {
+        status.textContent = "Preencha todos os campos!";
+        return;
+      }
+
+      const docExistente = await db.collection("rifa").where("numero", "==", numero).get();
+      if (!docExistente.empty) {
+        status.textContent = "Esse número já foi escolhido. Recarregue a página.";
+        return;
+      }
+
+      status.textContent = "Enviando...";
+
+      const nomeArquivo = `${numero}_${Date.now()}.${arquivo.name.split('.').pop()}`;
+      const ref = storage.ref("comprovantes/" + nomeArquivo);
+      await ref.put(arquivo);
+      const urlComprovante = await ref.getDownloadURL();
+
+      await db.collection("rifa").add({
+        nome,
+        numero,
+        comprovanteURL: urlComprovante,
+        timestamp: new Date()
+      });
+
+      status.textContent = "Participação registrada com sucesso!";
+    }
+  </script>
+</body>
+</html>
