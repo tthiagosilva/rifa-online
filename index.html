@@ -101,12 +101,12 @@
 
       const total = selecionados.length * totalPorNumero;
       const recibo = `*Rifa da Esperança*\\n` +
-        `Nome: ${nome}\\n` +
-        `Números: ${selecionados.join(", ")}\\n` +
-        `Valor total: R$ ${total.toFixed(2)}\\n` +
+        `Nome: ${nome}%0A` +
+        `Números: ${selecionados.join(", ")}%0A` +
+        `Valor total: R$ ${total.toFixed(2)}%0A` +
         `Chave Pix: 01653282231 (CPF)`;
 
-      const link = `https://wa.me/?text=${encodeURIComponent(recibo)}`;
+      const link = `https://wa.me/5591991901881?text=${encodeURIComponent(recibo)}`;
       window.open(link, "_blank");
       location.reload();
     }
