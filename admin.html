@@ -3,39 +3,26 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Painel da Rifa</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Painel do Organizador - Rifa Online</title>
+  <link rel="stylesheet" href="admin.css">
   <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
-  <h2>Painel do Organizador</h2>
-
+  <h1>Painel do Organizador</h1>
   <div id="login">
-    <p>Senha de acesso:</p>
-    <input type="password" id="senha">
-    <button onclick="verificarSenha()">Entrar</button>
-    <p id="erro" style="color: red;"></p>
+    <input type="password" id="senha" placeholder="Digite a senha">
+    <button onclick="autenticar()">Entrar</button>
   </div>
-
   <div id="painel" style="display:none;">
-    <div id="lista"></div>
+    <h2>Participantes</h2>
+    <table id="tabela">
+      <thead><tr><th>Nome</th><th>Número</th><th>Ação</th></tr></thead>
+      <tbody></tbody>
+    </table>
   </div>
 
   <script>
-    const SENHA_CORRETA = "organizador123";
-
-    function verificarSenha() {
-      const senha = document.getElementById("senha").value;
-      if (senha === SENHA_CORRETA) {
-        document.getElementById("login").style.display = "none";
-        document.getElementById("painel").style.display = "block";
-        carregarDados();
-      } else {
-        document.getElementById("erro").textContent = "Senha incorreta!";
-      }
-    }
-
     const firebaseConfig = {
       apiKey: "AIzaSyDS8PvI9sIP6wLTHz85C13gRiilyNZD96Q",
       authDomain: "rifadaesperancaonline.firebaseapp.com",
@@ -44,21 +31,38 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
+    function autenticar() {
+      const senha = document.getElementById("senha").value;
+      if (senha === "admin123") {
+        document.getElementById("login").style.display = "none";
+        document.getElementById("painel").style.display = "block";
+        carregarDados();
+      } else {
+        alert("Senha incorreta.");
+      }
+    }
+
     async function carregarDados() {
-      const lista = document.getElementById("lista");
-      const snapshot = await db.collection("rifa").orderBy("timestamp", "desc").get();
+      const tbody = document.querySelector("#tabela tbody");
+      tbody.innerHTML = "";
+      const snapshot = await db.collection("rifa").orderBy("timestamp").get();
       snapshot.forEach(doc => {
         const data = doc.data();
-        const div = document.createElement("div");
-        div.className = "entrada";
-        div.innerHTML = `
-          <strong>${data.nome}</strong><br>
-          Número: ${data.numero}<br>
-          <a href="${data.comprovanteURL}" target="_blank">Ver comprovante</a><br>
-          <small>${new Date(data.timestamp.toDate()).toLocaleString()}</small>
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${data.nome}</td>
+          <td>${data.numero}</td>
+          <td><button onclick="liberar('${doc.id}')">Liberar</button></td>
         `;
-        lista.appendChild(div);
+        tbody.appendChild(tr);
       });
+    }
+
+    async function liberar(id) {
+      if (confirm("Deseja liberar esse número?")) {
+        await db.collection("rifa").doc(id).delete();
+        carregarDados();
+      }
     }
   </script>
 </body>
