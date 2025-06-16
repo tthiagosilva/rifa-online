@@ -1,37 +1,51 @@
 
 body {
-  font-family: 'Roboto', sans-serif;
-  background-color: #f9f9f9;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f4f4f9;
   color: #1E3A5F;
-  max-width: 600px;
-  margin: auto;
+  text-align: center;
   padding: 20px;
 }
-h2 {
+h1 {
   color: #1E3A5F;
 }
-input, select, button {
-  width: 100%;
+#circle {
+  width: 600px;
+  height: 600px;
+  margin: 0 auto;
+  position: relative;
+}
+.number {
+  width: 50px;
+  height: 50px;
+  background: #D4AF37;
+  color: white;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 50px;
+  position: absolute;
+  cursor: pointer;
+  font-weight: bold;
+}
+.number.occupied {
+  background: #ccc;
+  cursor: not-allowed;
+}
+.number.selected {
+  background: #1E3A5F;
+}
+input, button {
   padding: 10px;
-  margin: 10px 0;
+  margin-top: 20px;
+  width: 300px;
   font-size: 1rem;
 }
 button {
   background-color: #D4AF37;
-  color: white;
   border: none;
+  color: white;
   cursor: pointer;
 }
 button:hover {
   background-color: #bfa437;
-}
-.ocupado {
-  background: #ccc;
-  color: #666;
-}
-.entrada {
-  background: white;
-  border: 1px solid #ddd;
-  padding: 10px;
-  margin-bottom: 10px;
 }
