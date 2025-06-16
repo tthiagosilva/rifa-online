@@ -9,29 +9,27 @@ body {
 h1 {
   color: #1E3A5F;
 }
-#circle {
-  width: 600px;
-  height: 600px;
+#grid table {
   margin: 0 auto;
-  position: relative;
+  border-collapse: collapse;
 }
-.number {
+#grid td {
   width: 50px;
   height: 50px;
   background: #D4AF37;
   color: white;
-  border-radius: 50%;
-  text-align: center;
-  line-height: 50px;
-  position: absolute;
-  cursor: pointer;
   font-weight: bold;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 8px;
+  margin: 5px;
+  cursor: pointer;
 }
-.number.occupied {
+#grid td.occupied {
   background: #ccc;
   cursor: not-allowed;
 }
-.number.selected {
+#grid td.selected {
   background: #1E3A5F;
 }
 input, button {
