@@ -100,11 +100,11 @@
       }
 
       const total = selecionados.length * totalPorNumero;
-      const recibo = `🎟️ *Rifa da Esperança*\\n` +
-        `👤 Nome: ${nome}\\n` +
-        `🔢 Números: ${selecionados.join(", ")}\\n` +
-        `💰 Valor total: R$ ${total.toFixed(2)}\\n` +
-        `📲 Chave Pix: 01653282231 (CPF)`;
+      const recibo = `*Rifa da Esperança*\\n` +
+        `Nome: ${nome}\\n` +
+        `Números: ${selecionados.join(", ")}\\n` +
+        `Valor total: R$ ${total.toFixed(2)}\\n` +
+        `Chave Pix: 01653282231 (CPF)`;
 
       const link = `https://wa.me/?text=${encodeURIComponent(recibo)}`;
       window.open(link, "_blank");
