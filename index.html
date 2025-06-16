@@ -2,104 +2,96 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Rifa Online</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
   <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-storage-compat.js"></script>
 </head>
 <body>
-
-  <h2>Rifa Online (R$10)</h2>
-
-  <label>Seu nome:</label>
-  <input type="text" id="nome" required>
-
-  <label>Número desejado:</label>
-  <select id="numero"></select>
-
-  <label>Comprovante PIX:</label>
-  <input type="file" id="comprovante" accept="image/*" required>
-  <img id="preview" style="max-width: 100%; display: none;">
-
-  <button onclick="enviar()">Enviar</button>
-
-  <p id="status"></p>
+  <h1>Rifa Online</h1>
+  <p>Escolha seus números:</p>
+  <div id="circle"></div>
+  <input type="text" id="nome" placeholder="Seu nome">
+  <br>
+  <button onclick="confirmar()">Confirmar e Enviar via WhatsApp</button>
 
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyDS8PvI9sIP6wLTHz85C13gRiilyNZD96Q",
       authDomain: "rifadaesperancaonline.firebaseapp.com",
-      projectId: "rifadaesperancaonline",
-      storageBucket: "rifadaesperancaonline.firebasestorage.app",
-      messagingSenderId: "197315129113",
-      appId: "1:197315129113:web:a5b75aa889573d2858df88"
+      projectId: "rifadaesperancaonline"
     };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
-    const storage = firebase.storage();
 
-    const numeroSelect = document.getElementById("numero");
-    async function carregarNumeros() {
-      const snapshot = await db.collection("rifa").get();
-      const ocupados = snapshot.docs.map(doc => doc.data().numero);
-      for (let i = 1; i <= 150; i++) {
-        const opt = document.createElement("option");
-        opt.value = i;
-        opt.textContent = i;
+    const circle = document.getElementById("circle");
+    const total = 150;
+    const radius = 250;
+    let ocupados = [];
+    let selecionados = [];
+
+    function desenharNúmeros() {
+      for (let i = 1; i <= total; i++) {
+        const ang = (2 * Math.PI / total) * i;
+        const x = radius + radius * Math.cos(ang) - 25;
+        const y = radius + radius * Math.sin(ang) - 25;
+        const div = document.createElement("div");
+        div.className = "number";
+        div.style.left = x + "px";
+        div.style.top = y + "px";
+        div.textContent = i;
+        div.dataset.numero = i;
+
         if (ocupados.includes(i)) {
-          opt.disabled = true;
-          opt.textContent += " (ocupado)";
+          div.classList.add("occupied");
+        } else {
+          div.onclick = () => toggleSelecionado(div);
         }
-        numeroSelect.appendChild(opt);
+
+        circle.appendChild(div);
       }
     }
-    carregarNumeros();
 
-    document.getElementById("comprovante").onchange = (e) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const img = document.getElementById("preview");
-        img.src = reader.result;
-        img.style.display = "block";
-      };
-      reader.readAsDataURL(e.target.files[0]);
-    };
+    function toggleSelecionado(div) {
+      const numero = parseInt(div.dataset.numero);
+      if (div.classList.contains("selected")) {
+        div.classList.remove("selected");
+        selecionados = selecionados.filter(n => n !== numero);
+      } else {
+        div.classList.add("selected");
+        selecionados.push(numero);
+      }
+    }
 
-    async function enviar() {
+    async function carregarOcupados() {
+      const snapshot = await db.collection("rifa").get();
+      ocupados = snapshot.docs.map(doc => doc.data().numero);
+      desenharNúmeros();
+    }
+
+    async function confirmar() {
       const nome = document.getElementById("nome").value.trim();
-      const numero = parseInt(document.getElementById("numero").value);
-      const arquivo = document.getElementById("comprovante").files[0];
-      const status = document.getElementById("status");
-
-      if (!nome || !arquivo) {
-        status.textContent = "Preencha todos os campos!";
+      if (!nome || selecionados.length === 0) {
+        alert("Informe seu nome e selecione pelo menos um número.");
         return;
       }
 
-      const docExistente = await db.collection("rifa").where("numero", "==", numero).get();
-      if (!docExistente.empty) {
-        status.textContent = "Esse número já foi escolhido. Recarregue a página.";
-        return;
+      for (let numero of selecionados) {
+        await db.collection("rifa").add({
+          nome,
+          numero,
+          timestamp: new Date()
+        });
       }
 
-      status.textContent = "Enviando...";
-
-      const nomeArquivo = `${numero}_${Date.now()}.${arquivo.name.split('.').pop()}`;
-      const ref = storage.ref("comprovantes/" + nomeArquivo);
-      await ref.put(arquivo);
-      const urlComprovante = await ref.getDownloadURL();
-
-      await db.collection("rifa").add({
-        nome,
-        numero,
-        comprovanteURL: urlComprovante,
-        timestamp: new Date()
-      });
-
-      status.textContent = "Participação registrada com sucesso!";
+      const msg = `Olá! Meu nome é ${nome} e escolhi os números: ${selecionados.join(", ")} na Rifa Online.`;
+      const link = `https://wa.me/?text=${encodeURIComponent(msg)}`;
+      window.open(link, "_blank");
+      location.reload();
     }
+
+    carregarOcupados();
   </script>
 </body>
 </html>
