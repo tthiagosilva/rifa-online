@@ -16,6 +16,14 @@ h1 {
   font-size: 1.8em;
 }
 
+.container {
+  display: flex;
+  align-items: center; /* Alinha verticalmente */
+  justify-content: center; /* Alinha horizontalmente */
+  height: 200px; /* Define a altura do contêiner */
+  text-align: left; /* Alinha o texto dentro do contêiner */
+}
+
 table {
   border-collapse: collapse;
 }
