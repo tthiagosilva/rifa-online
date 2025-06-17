@@ -64,8 +64,7 @@ button {
   margin: 10px;
   cursor: pointer;
   border-radius: 6px;
-  width: 400px; /* Define a largura como 200 pixels */
-  height: 100px; /* Define a altura como 50 pixels */
+  
 }
 
 input {
