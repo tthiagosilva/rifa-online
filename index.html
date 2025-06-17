@@ -100,10 +100,10 @@
       }
 
       const total = selecionados.length * totalPorNumero;
-      const recibo = `*Rifa da Esperança:*` + '%0A`+
-        `Nome: ${nome}' +'%0A`+
-        `Números: ${selecionados.join(", ")}'+ '%0A` +
-        `Valor total: R$ ${total.toFixed(2)}'+'%0A` +
+      const recibo = `*Rifa da Esperança:*`+
+        `Nome: ${nome}`+
+        `Números: ${selecionados.join(", ")}` +
+        `Valor total: R$ ${total.toFixed(2)}` +
         `Chave Pix: 01653282231 (CPF)`;
 
       const link = `https://wa.me/5591991901881?text=${encodeURIComponent(recibo)}`;
