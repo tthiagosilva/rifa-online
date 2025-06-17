@@ -22,6 +22,7 @@ h1 {
   justify-content: center; /* Alinha horizontalmente */
   height: 200px; /* Define a altura do contêiner */
   text-align: left; /* Alinha o texto dentro do contêiner */
+  font-size: 2rem;
 }
 
 table {
