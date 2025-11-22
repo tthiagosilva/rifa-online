@@ -1,9 +1,9 @@
 const container = document.getElementById("numeros-container");
 const valorTotal = document.getElementById("valorTotal");
-const precoPorNumero = 10;
+const precoPorNumero = 20;
 let numerosSelecionados = [];
 
-for (let i = 1; i <= 150; i++) {
+for (let i = 1; i <= 200; i++) {
   const btn = document.createElement("button");
   btn.textContent = i.toString().padStart(3, '0');
   btn.addEventListener("click", () => toggleSelecionado(btn, i));
