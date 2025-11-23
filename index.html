@@ -46,14 +46,14 @@
 
     const grid = document.getElementById("grid");
     const totalDisplay = document.getElementById("total");
-    const totalPorNumero = 10;
+    const totalPorNumero = 20;
     let ocupados = [];
     let selecionados = [];
 
     function desenharNumeros() {
       grid.innerHTML = "";
       let table = document.createElement("table");
-      for (let row = 0; row < 15; row++) {
+      for (let row = 0; row < 20; row++) {
         let tr = document.createElement("tr");
         for (let col = 0; col < 10; col++) {
           let num = row * 10 + col + 1;
