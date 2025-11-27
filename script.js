@@ -1,6 +1,6 @@
 const container = document.getElementById("numeros-container");
 const valorTotal = document.getElementById("valorTotal");
-const precoPorNumero = 20;
+const precoPorNumero = 10;
 let numerosSelecionados = [];
 
 for (let i = 1; i <= 200; i++) {
