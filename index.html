@@ -2,17 +2,16 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Lua de Mel - MANU & ADRIEL</title>
+  <title>RIFA DA ESPERANÇA</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
-  <h1>Lua de Mel - MANU & ADRIEL</h1>
-  <p style= "font-size: 1.4rem; text-align: left; max-width: 800px;"><strong>Premiação:<span style="color:red;"> 1- Cooktop</span></strong></p>
-  <p style= "font-size: 1.4rem; text-align: left; max-width: 800px;"><strong>Premiação:<span style="color:red;"> 1- Wysk Old Parr</span></strong></p>
-  <p style= "font-size: 1.4rem; text-align: left; max-width: 800px;"><strong>Valor por número:<span style="color:red;"> R$20,00</span></strong></p>
-  <p style= "font-size: 1.4rem; text-align: left; max-width: 800px;"><strong>Data do Sorteio:</strong> 22/11/2025</p>
+  <h1>RIFA DA ESPERANÇA</h1>
+  <p style= "font-size: 1.4rem; text-align: left; max-width: 800px;"><strong>Premiação:<span style="color:red;"> 1 KIT COMPLETO TAPPERWARE</span></strong></p>
+    <p style= "font-size: 1.4rem; text-align: left; max-width: 800px;"><strong>Valor por número:<span style="color:red;"> R$10,00</span></strong></p>
+  <p style= "font-size: 1.4rem; text-align: left; max-width: 800px;"><strong>Data do Sorteio:</strong> A AGENDAR</p>
   <br><br>
   
   <div> 
@@ -28,10 +27,10 @@
   <br>
   <input style="font-size: 1.8rem;" type="text" id="nome" placeholder="Seu nome completo">
   <div id="total" style="font-size: 2rem; margin-top: 20px;">Total: R$ 0,00</div>
-  <p style= "font-size: 1.5rem;"><strong>Pagamento via Pix:</strong><br> Celular: 91986157000
+  <p style= "font-size: 1.5rem;"><strong>Pagamento via Pix:</strong><br> chave PIx: 01653282231
     <button style= "font-size: 1.2rem;" onclick="copiarPix()">Copiar chave</button>
   </p>
-  <p style= "font-size: 1.5rem;">NOME: JANDERSON ADRIEL FREITAS SANTOS - NUBANK</p>
+  <p style= "font-size: 1.5rem;">NOME: CYBELLE GARCIA FIGUEIRA - BANPARA</p>
   <br><br>
   <button style= "width: 400px; height: 100px; font-size: 1.9rem;" onclick="confirmar()">Confirmar e Enviar via WhatsApp</button>
 
@@ -116,7 +115,7 @@
         `👤 Nome: ${nome}\\n` +
         `🔢 Números: ${selecionados.join(", ")}\\n` +
         `💰 Valor total: R$ ${total.toFixed(2)}\\n` +
-        `📲 Chave Pix: 91986157000 (CELULAR)`;
+        `📲 Chave Pix: 01653282231 (CPF)`;
 
       const link = `https://wa.me/5591986157000?text=${encodeURIComponent(recibo)}`;
       window.open(link, "_blank");
