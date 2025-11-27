@@ -449,128 +449,40 @@ button {
   }
 }
 
-/* ✅ Ajustes gerais para telas menores que 900px (já ajuda em tablets e celulares em pé) */
-@media (max-width: 900px) {
-  body {
-    padding: 20px 10px;
-  }
-
-  .main-layout {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-
-  .hero {
-    text-align: center;
-  }
-
-  .hero-subtitle {
-    max-width: 100%;
-  }
-
-  .info-card,
-  .raffle-card,
-  .pix-card {
-    padding: 14px 14px 12px;
-  }
-
-  .prize-image {
-    max-width: 280px;
-  }
+/* Layout totalmente em coluna única */
+.one-column {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  width: 100%;
 }
 
-/* ✅ Foco em smartphone (até ~640px) */
-@media (max-width: 640px) {
-  h1 {
-    font-size: 1.8rem;
-    text-align: center;
-  }
-
-  .hero-badge {
-    margin: 0 auto;
-  }
-
-  .section-title {
-    font-size: 1rem;
-  }
-
-  .steps-list,
-  .info-list {
-    font-size: 0.9rem;
-  }
-
-  .main-layout {
-    gap: 14px;
-  }
-
-  #grid {
-    padding: 6px;
-  }
-
-  table {
-    border-spacing: 4px;
-  }
-
-  td {
-    width: 38px;
-    height: 38px;
-    font-size: 0.78rem;
-    border-radius: 10px;
-  }
-
-  .input-group {
-    margin-top: 10px;
-  }
-
-  input {
-    font-size: 0.9rem;
-    padding: 8px 10px;
-  }
-
-  .total-display {
-    font-size: 1rem;
-  }
-
-  .btn-primary,
-  .btn-secondary {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .btn-primary {
-    margin-top: 8px;
-    padding: 11px 18px;
-    font-size: 0.9rem;
-  }
+/* Garantir que todos os cards estiquem na tela inteira */
+.info-card,
+.raffle-card,
+.pix-card {
+  width: 100%;
+  box-sizing: border-box;
 }
 
-/* ✅ Muito pequeno (até 430px – celulares menores) */
-@media (max-width: 430px) {
-  body {
-    padding: 14px 8px;
-  }
+/* Centralizar tudo */
+.one-column section,
+.one-column button {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 600px;
+  width: 100%;
+}
 
-  h1 {
-    font-size: 1.6rem;
-  }
+/* Grid ajustado para telas pequenas */
+#grid {
+  overflow-x: auto;
+  padding: 6px;
+}
 
-  .hero-subtitle {
-    font-size: 0.9rem;
-  }
+td {
+  width: 42px;
+  height: 42px;
+}
 
-  .info-card,
-  .raffle-card,
-  .pix-card {
-    padding: 12px 10px;
-    border-radius: 14px;
-  }
-
-  #grid {
-    padding: 4px;
-  }
-
-  td {
-    width: 34px;
-    height: 34px;
-    font-size
 
