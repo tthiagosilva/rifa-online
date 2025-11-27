@@ -1,209 +1,70 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <title>RIFA DA ESPERANÇA</title>
-  <link rel="stylesheet" href="style.css">
+<main class="one-column">
+  
+  <!-- Detalhes da rifa -->
+  <section class="info-card">
+    <h2 class="section-title">Detalhes da Rifa</h2>
+    <ul class="info-list">
+      <li>
+        <span class="label">Premiação:</span>
+        <span class="value highlight">1 KIT COMPLETO TUPPERWARE – 12 acessórios</span>
+      </li>
+      <li>
+        <span class="label">Valor por número:</span>
+        <span class="value highlight">R$ 10,00</span>
+      </li>
+      <li>
+        <span class="label">Data do sorteio:</span>
+        <span class="value">A definir (será divulgada antecipadamente)</span>
+      </li>
+    </ul>
 
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
-</head>
-<body>
-  <div class="page">
+    <div class="prize-image-wrapper">
+      <img src="kit_tapperware.PNG" alt="Kit Tupperware" class="prize-image">
+    </div>
+  </section>
 
-    <!-- Cabeçalho / Hero -->
-    <header class="hero">
-      <span class="hero-badge">Ação solidária</span>
-      <h1>Rifa da Esperança</h1>
-      <p class="hero-subtitle">
-        Participe da nossa rifa, concorra a um kit completo Tupperware e ajude nossa causa.
-      </p>
-    </header>
+  <!-- Como participar -->
+  <section class="info-card">
+    <h2 class="section-title">Como participar</h2>
+    <ol class="steps-list">
+      <li>Selecione os números desejados no painel abaixo.</li>
+      <li>Digite seu nome completo.</li>
+      <li>Pague via Pix usando a chave informada.</li>
+      <li>Clique em <strong>“Confirmar e Enviar via WhatsApp”</strong>.</li>
+    </ol>
+    <p class="warning-text">
+      <strong>Atenção:</strong> a reserva só é válida após o envio do comprovante pelo WhatsApp.
+    </p>
+  </section>
 
-    <!-- Conteúdo principal -->
-    <main class="main-layout">
-      <!-- Lado esquerdo: informações da rifa -->
-      <section class="info-column">
-        <div class="info-card">
-          <h2 class="section-title">Detalhes da Rifa</h2>
-          <ul class="info-list">
-            <li>
-              <span class="label">Premiação:</span>
-              <span class="value highlight">1 KIT COMPLETO TUPPERWARE – 12 acessórios</span>
-            </li>
-            <li>
-              <span class="label">Valor por número:</span>
-              <span class="value highlight">R$ 10,00</span>
-            </li>
-            <li>
-              <span class="label">Data do sorteio:</span>
-              <span class="value">A definir (será divulgada antecipadamente)</span>
-            </li>
-          </ul>
+  <!-- Grid da Rifa -->
+  <section class="raffle-card">
+    <h2 class="section-title">Escolha seus números</h2>
+    <div id="grid"></div>
 
-          <div class="prize-image-wrapper">
-            <img src="kit_tapperware.PNG" alt="Kit Tupperware" class="prize-image">
-          </div>
-        </div>
+    <div class="input-group">
+      <label for="nome" class="input-label">Seu nome completo</label>
+      <input type="text" id="nome" placeholder="Digite seu nome">
+    </div>
 
-        <div class="info-card">
-          <h2 class="section-title">Como participar</h2>
-          <ol class="steps-list">
-            <li>Selecione os números desejados no painel ao lado.</li>
-            <li>Digite seu nome completo para identificar seu bilhete.</li>
-            <li>Faça o pagamento via Pix utilizando a chave informada.</li>
-            <li>
-              Clique em <span class="text-highlight">“Confirmar e Enviar via WhatsApp”</span>
-              para enviar seus dados e o comprovante ao responsável.
-            </li>
-          </ol>
-          <p class="warning-text">
-            <strong>Importante:</strong> a reserva dos números só será válida após
-            <strong>enviar o comprovante do Pix</strong> pelo WhatsApp após clicar em
-            <strong>“Confirmar e Enviar via WhatsApp”.</strong>
-          </p>
-        </div>
-      </section>
+    <div id="total" class="total-display">Total: R$ 0,00</div>
+  </section>
 
-      <!-- Lado direito: grid da rifa -->
-      <section class="raffle-column">
-        <div class="raffle-card">
-          <div class="raffle-header">
-            <h2 class="section-title">Escolha seus números</h2>
-            <span class="pill">150 números disponíveis</span>
-          </div>
+  <!-- Pagamento -->
+  <section class="pix-card">
+    <h2 class="section-title">Pagamento via Pix</h2>
+    <p class="pix-text">
+      <strong>Chave Pix (CPF):</strong><br>
+      <span class="pix-key">01653282231</span>
+    </p>
+    <button class="btn-secondary" onclick="copiarPix()">Copiar chave Pix</button>
+    <p class="account-text">
+      <strong>Titular:</strong> CYBELLE GARCIA FIGUEIRA – BANPARÁ
+    </p>
+  </section>
 
-          <div id="grid"></div>
+  <button class="btn-primary btn-confirm" onclick="confirmar()">
+    Confirmar e Enviar via WhatsApp
+  </button>
 
-          <div class="input-group">
-            <label for="nome" class="input-label">Seu nome completo</label>
-            <input type="text" id="nome" placeholder="Digite seu nome completo">
-          </div>
-
-          <div id="total" class="total-display">Total: R$ 0,00</div>
-        </div>
-
-        <div class="pix-card">
-          <h2 class="section-title">Pagamento via Pix</h2>
-          <p class="pix-text">
-            <strong>Chave Pix (CPF):</strong><br>
-            <span class="pix-key">01653282231</span>
-          </p>
-          <button type="button" class="btn-secondary" onclick="copiarPix()">
-            Copiar chave Pix
-          </button>
-          <p class="account-text">
-            <strong>Titular:</strong> CYBELLE GARCIA FIGUEIRA – BANPARÁ
-          </p>
-        </div>
-
-        <button
-          type="button"
-          class="btn-primary btn-confirm"
-          onclick="confirmar()"
-        >
-          Confirmar e Enviar via WhatsApp
-        </button>
-      </section>
-    </main>
-  </div>
-
-  <!-- Script da rifa -->
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyDS8PvI9sIP6wLTHz85C13gRiilyNZD96Q",
-      authDomain: "rifadaesperancaonline.firebaseapp.com",
-      projectId: "rifadaesperancaonline"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-
-    const grid = document.getElementById("grid");
-    const totalDisplay = document.getElementById("total");
-    const totalPorNumero = 10;
-    let ocupados = [];
-    let selecionados = [];
-
-    function desenharNumeros() {
-      grid.innerHTML = "";
-      let table = document.createElement("table");
-      for (let row = 0; row < 20; row++) {
-        let tr = document.createElement("tr");
-        for (let col = 0; col < 10; col++) {
-          let num = row * 10 + col + 1;
-          let td = document.createElement("td");
-          td.textContent = num;
-          td.dataset.numero = num;
-          td.className = "number";
-          if (ocupados.includes(num)) {
-            td.classList.add("occupied");
-          } else {
-            td.onclick = () => toggleSelecionado(td);
-          }
-          tr.appendChild(td);
-        }
-        table.appendChild(tr);
-      }
-      grid.appendChild(table);
-    }
-
-    function toggleSelecionado(td) {
-      const numero = parseInt(td.dataset.numero);
-      if (td.classList.contains("selected")) {
-        td.classList.remove("selected");
-        selecionados = selecionados.filter(n => n !== numero);
-      } else {
-        td.classList.add("selected");
-        selecionados.push(numero);
-      }
-      atualizarTotal();
-    }
-
-    function atualizarTotal() {
-      const total = selecionados.length * totalPorNumero;
-      totalDisplay.textContent = "Total: R$ " + total.toFixed(2);
-    }
-
-    async function carregarOcupados() {
-      const snapshot = await db.collection("rifa").get();
-      ocupados = snapshot.docs.map(doc => doc.data().numero);
-      desenharNumeros();
-    }
-
-    async function confirmar() {
-      const nome = document.getElementById("nome").value.trim();
-      if (!nome || selecionados.length === 0) {
-        alert("Informe seu nome e selecione pelo menos um número.");
-        return;
-      }
-
-      for (let numero of selecionados) {
-        await db.collection("rifa").add({
-          nome,
-          numero,
-          timestamp: new Date()
-        });
-      }
-
-      const total = selecionados.length * totalPorNumero;
-      const recibo = `🎟️ *Rifa da Esperança*\n` +
-        `👤 Nome: ${nome}\n` +
-        `🔢 Números: ${selecionados.join(", ")}\n` +
-        `💰 Valor total: R$ ${total.toFixed(2)}\n` +
-        `📲 Chave Pix: 01653282231 (CPF)`;
-
-      const link = `https://wa.me/5591986157000?text=${encodeURIComponent(recibo)}`;
-      window.open(link, "_blank");
-      location.reload();
-    }
-
-    function copiarPix() {
-      navigator.clipboard.writeText("01653282231");
-      alert("Chave Pix copiada!");
-    }
-
-    carregarOcupados();
-  </script>
-</body>
-</html>
+</main>
