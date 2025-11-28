@@ -525,3 +525,43 @@ button {
     max-width: 230px;
   }
 }
+
+/* --- AJUSTE DO GRID PARA CABER NO CARD --- */
+
+.raffle-card {
+  padding: 20px;
+  overflow: hidden; /* evita estourar o card */
+}
+
+#grid {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;       /* permite scroll apenas se precisar */
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#grid table {
+  width: 100%;            /* adapta a tabela ao card */
+  max-width: 100%;
+  table-layout: fixed;    /* força as células a se ajustarem */
+}
+
+/* células ajustáveis */
+#grid td {
+  width: calc((100% / 10) - 6px);  /* divide a tabela em 10 colunas */
+  height: 40px;                    /* altura padrão */
+  max-width: 48px;                 /* para não ficarem gigantes no desktop */
+  font-size: 0.85rem;
+}
+
+/* --- MOBILE (iPhone width < 430px) --- */
+@media (max-width: 430px) {
+  #grid td {
+    height: 34px;
+    font-size: 0.70rem;
+  }
+}
+
