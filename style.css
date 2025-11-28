@@ -28,6 +28,11 @@ body {
   padding: 32px 16px;
   background: radial-gradient(circle at top, #1e293b 0, #020617 55%);
   color: var(--text-main);
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
 }
 
 .page {
@@ -71,12 +76,21 @@ h1 {
   color: var(--text-muted);
 }
 
-/* ---------- LAYOUT PRINCIPAL ---------- */
-.main-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.2fr);
-  gap: 24px;
-  align-items: flex-start;
+/* ---------- LAYOUT UMA COLUNA ---------- */
+.one-column {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  width: 100%;
+}
+
+/* Centralização dos cards */
+.one-column section,
+.one-column button {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 600px;
+  width: 100%;
 }
 
 /* ---------- CARDS ---------- */
@@ -131,7 +145,7 @@ h1 {
   font-weight: 600;
 }
 
-/* ---------- IMAGEM ---------- */
+/* ---------- IMAGEM DO PRÊMIO ---------- */
 .prize-image-wrapper {
   margin-top: 12px;
   display: flex;
@@ -169,46 +183,26 @@ h1 {
   color: #fbbf24;
 }
 
-/* ---------- COLUNA DA RIFA ---------- */
-.raffle-column {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+/* ---------- CARD DA RIFA ---------- */
+.raffle-card {
+  padding: 18px;
 }
 
-.raffle-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  margin-bottom: 8px;
-}
-
-.pill {
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  padding: 4px 10px;
-  border-radius: 999px;
-  background: rgba(37, 99, 235, 0.1);
-  border: 1px solid rgba(37, 99, 235, 0.4);
-  color: var(--primary-soft);
-}
-
-/* ---------- GRID DA RIFA (#grid + table + td) ---------- */
 #grid {
-  display: inline-block;
   width: 100%;
+  padding: 0;
   overflow-x: auto;
-  padding: 8px;
+  display: flex;
+  justify-content: center;
   border-radius: 14px;
   background: radial-gradient(circle at top, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.85));
 }
 
+/* ---------- TABELA E NÚMEROS ---------- */
 table {
   border-collapse: separate;
   border-spacing: 6px;
-  margin: 0 auto;
+  margin: 8px auto 0;
 }
 
 td {
@@ -267,7 +261,7 @@ td.selected {
   100% { transform: scale(1); }
 }
 
-/* ---------- INPUTS / TOTAL ---------- */
+/* ---------- INPUT E TOTAL ---------- */
 .input-group {
   margin-top: 14px;
   display: flex;
@@ -319,7 +313,7 @@ input:focus {
   color: var(--primary-soft);
 }
 
-/* ---------- PIX / BOTÕES ---------- */
+/* ---------- PIX E BOTÕES ---------- */
 .pix-text {
   margin: 0 0 8px;
   font-size: 0.95rem;
@@ -342,7 +336,6 @@ input:focus {
   color: var(--text-muted);
 }
 
-/* Botão base */
 button {
   border: none;
   cursor: pointer;
@@ -380,6 +373,10 @@ button {
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.9);
 }
 
+.btn-confirm {
+  margin-top: 4px;
+}
+
 /* Botão secundário */
 .btn-secondary {
   margin-top: 4px;
@@ -404,14 +401,12 @@ button {
   transform: translateY(-1px);
 }
 
-.btn-confirm {
-  margin-top: 4px;
-}
-
 /* ---------- RESPONSIVIDADE ---------- */
-@media (max-width: 900px) {
-  .main-layout {
-    grid-template-columns: 1fr;
+
+/* Até ~768px (tablet / celular em pé) */
+@media (max-width: 768px) {
+  body {
+    padding: 24px 12px;
   }
 
   .hero {
@@ -421,85 +416,108 @@ button {
   .hero-subtitle {
     max-width: 100%;
   }
-}
 
-@media (max-width: 640px) {
   h1 {
-    font-size: 2rem;
+    font-size: 2.2rem;
     text-align: center;
   }
 
-  .page {
+  .one-column section,
+  .one-column button {
     max-width: 100%;
   }
 
-  .raffle-header {
-    flex-direction: column;
-    align-items: flex-start;
+  .info-card,
+  .raffle-card,
+  .pix-card {
+    padding: 16px 14px 14px;
+  }
+}
+
+/* Até ~480px (smartphones médios) */
+@media (max-width: 480px) {
+  body {
+    padding: 20px 10px;
+  }
+
+  h1 {
+    font-size: 1.9rem;
+  }
+
+  .hero-badge {
+    margin: 0 auto;
+  }
+
+  .section-title {
+    font-size: 1rem;
+  }
+
+  .steps-list,
+  .info-list {
+    font-size: 0.9rem;
+  }
+
+  #grid {
+    padding: 0;
+  }
+
+  table {
+    border-spacing: 4px;
   }
 
   td {
-    width: 44px;
-    height: 44px;
-    font-size: 0.85rem;
+    width: 40px;
+    height: 40px;
+    font-size: 0.78rem;
+    border-radius: 10px;
+  }
+
+  input {
+    font-size: 0.9rem;
+    padding: 8px 10px;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+    justify-content: center;
   }
 
   .btn-primary {
-    width: 100%;
+    margin-top: 8px;
+    padding: 11px 18px;
+    font-size: 0.9rem;
   }
 }
 
-/* Layout totalmente em coluna única */
-.one-column {
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
-  width: 100%;
+/* Até ~390px (iPhone 12/13/14/15) */
+@media (max-width: 390px) {
+  body {
+    padding: 16px 8px;
+  }
+
+  h1 {
+    font-size: 1.7rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .info-card,
+  .raffle-card,
+  .pix-card {
+    padding: 12px 10px;
+    border-radius: 14px;
+  }
+
+  td {
+    width: 36px;
+    height: 36px;
+    font-size: 0.75rem;
+  }
+
+  .prize-image {
+    max-width: 230px;
+  }
 }
-
-/* Garantir que todos os cards estiquem na tela inteira */
-.info-card,
-.raffle-card,
-.pix-card {
-  width: 100%;
-  box-sizing: border-box;
-}
-
-/* Centralizar tudo */
-.one-column section,
-.one-column button {
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 600px;
-  width: 100%;
-}
-
-/* Grid ajustado para telas pequenas */
-#grid {
-  overflow-x: auto;
-  padding: 6px;
-}
-
-td {
-  width: 42px;
-  height: 42px;
-}
-
-/* Ajuste do grid ao padding do card */
-.raffle-card {
-  padding: 20px;
-}
-
-#grid {
-  width: 100%;
-  padding: 0;              /* Remove padding extra */
-  overflow-x: auto;
-  display: flex;
-  justify-content: center; /* Centraliza a tabela */
-}
-
-#grid table {
-  margin: 0 auto;          /* Centraliza dentro do grid */
-}
-
-
