@@ -485,4 +485,21 @@ td {
   height: 42px;
 }
 
+/* Ajuste do grid ao padding do card */
+.raffle-card {
+  padding: 20px;
+}
+
+#grid {
+  width: 100%;
+  padding: 0;              /* Remove padding extra */
+  overflow-x: auto;
+  display: flex;
+  justify-content: center; /* Centraliza a tabela */
+}
+
+#grid table {
+  margin: 0 auto;          /* Centraliza dentro do grid */
+}
+
 
